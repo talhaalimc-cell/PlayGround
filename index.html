@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#10131e" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <title>Redwood — A Pocket Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Redwood home"><span class="brand-mark"><i></i><i></i><i></i></span><span>REDWOOD<span class="brand-sub">FIELD NOTES · 01</span></span></a>
+      <div class="top-center"><span class="live-dot"></span> SAVE FILE <b id="save-status">READY</b></div>
+      <button class="sound-toggle" id="sound-toggle" aria-label="Toggle sound"><span class="sound-icon">♪</span><span>SOUND <b id="sound-state">OFF</b></span></button>
+    </header>
+
+    <section class="game-layout">
+      <div class="play-column">
+        <div class="location-row"><div><span class="eyebrow">KANTO REGION · ROUTE 01</span><h1 id="location-name">PALLET MEADOW</h1></div><div class="weather"><span class="sun-icon">☀</span><span>24°<small> CLEAR</small></span></div></div>
+        <div class="scene-frame">
+          <canvas id="game" aria-label="Isometric Redwood world. Use arrow keys or WASD to move."></canvas>
+          <div class="scene-vignette"></div>
+          <div class="scene-hud"><span class="area-pill"><i></i><span id="area-label">PALLET MEADOW</span></span><span class="clock-pill">DAY <b>01</b><span class="clock-sun">◷</span></span></div>
+          <div class="scene-hint" id="scene-hint"><span class="keycap">E</span> <span id="hint-text">TALK TO PROFESSOR ROWAN</span></div>
+          <div class="dialog-toast" id="toast" aria-live="polite"></div>
+          <div class="battle-panel hidden" id="battle-panel">
+            <div class="battle-topline"><span class="battle-tag"><span></span> WILD ENCOUNTER</span><span class="battle-turn" id="battle-turn">A wild Spriglet appeared!</span></div>
+            <div class="battle-creature-row"><div class="wild-card"><div class="wild-art" id="wild-art"></div><div class="wild-details"><strong id="wild-name">Spriglet</strong><span id="wild-type">LEAF · LV 3</span><div class="hp-track"><i id="wild-hp"></i></div><small id="wild-hp-label">HP 20 / 20</small></div></div><div class="vs-mark">VS</div><div class="ally-card"><div class="ally-art" id="ally-art"></div><div class="ally-details"><strong id="ally-name">Cindercub</strong><span>YOUR PARTNER · LV <b id="ally-level">5</b></span><div class="hp-track"><i id="ally-hp"></i></div><small id="ally-hp-label">HP 24 / 24</small></div></div></div>
+            <div class="battle-bottom"><p id="battle-message">A wild Spriglet is watching you.</p><div class="battle-actions"><button class="battle-btn primary" id="attack-btn"><span>✦</span> ATTACK <kbd>1</kbd></button><button class="battle-btn" id="capture-btn"><span>◉</span> CAPTURE <kbd>2</kbd></button><button class="battle-btn" id="run-btn"><span>↗</span> RUN <kbd>3</kbd></button></div></div>
+          </div>
+          <div class="start-screen" id="start-screen">
+            <div class="intro-card">
+              <div class="intro-overline"><span class="intro-seal">R</span><span>PROFESSOR ROWAN'S FIELD GUIDE<br><b>NEW JOURNEY · KANTO, 1996</b></span></div>
+              <h2>A little world<br>waiting <em>out there.</em></h2>
+              <p>Pick a partner. Follow the path. See who you meet in the tall grass.</p>
+              <div class="starter-list" id="starter-list"></div>
+              <div class="intro-foot"><span>↑ ↓ ← → <b>MOVE</b></span><span><b>ENTER</b> TO BEGIN</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="controls-row"><div class="controls-copy"><span class="control-orb">⌘</span><span><b>EXPLORE THE MEADOW</b><small>Wander into tall grass to find new friends.</small></span></div><div class="key-guide"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <small>MOVE</small></span><span><kbd>E</kbd> <small>INTERACT</small></span></div></div>
+      </div>
+
+      <aside class="sidebar">
+        <section class="trainer-card">
+          <div class="card-head"><span>TRAINER CARD</span><span class="card-menu">···</span></div>
+          <div class="trainer-profile"><div class="avatar" aria-hidden="true"><div class="avatar-hair"></div><div class="avatar-face"></div><div class="avatar-shirt"></div></div><div class="trainer-info"><h2>RED</h2><p>THE NEW KID · PALLET TOWN</p></div><div class="trainer-level"><small>LV</small><b id="trainer-level">01</b></div></div>
+          <div class="trainer-stats"><div><small>PARTNER</small><strong id="partner-short">—</strong></div><div><small>POKÉDEX</small><strong><span id="caught-count">0</span><i> / 06</i></strong></div><div><small>BADGES</small><strong id="badge-count">00 <i> / 08</i></strong></div></div>
+        </section>
+        <section class="party-section"><div class="section-title"><h3>YOUR PARTY</h3><span class="party-count" id="party-count">0 / 6</span></div><div class="party-list" id="party-list"><div class="empty-party"><span>✳</span> Your first partner is waiting.</div></div></section>
+        <section class="quest-card"><div class="quest-heading"><span class="quest-icon">✦</span><div><small>FIELD JOURNAL · MAIN QUEST</small><h3 id="quest-title">A PARTNER FOR THE ROAD</h3></div></div><p id="quest-copy">Choose your first partner from Professor Rowan, then head into the meadow.</p><div class="quest-progress"><div class="progress-line"><i id="quest-progress-bar"></i></div><span id="quest-progress-label">0 / 3</span></div><div class="quest-steps"><span class="step-dot done" id="step-starter"></span><span class="step-dot" id="step-catch1"></span><span class="step-dot" id="step-catch2"></span><span class="step-dot" id="step-return"></span><span class="step-caption" id="step-caption">MEET YOUR PARTNER</span></div></section>
+        <section class="field-tip"><div class="tip-spark">✧</div><div><small>ROWAN'S NOTE</small><p id="tip-copy">The grass rustles when something's nearby. Keep your eyes open.</p></div></section>
+        <div class="sidebar-footer"><span>REDWOOD FIELD GUIDE <b>v1.0</b></span><span>© 1996 · KANTO</span></div>
+      </aside>
+    </section>
+    <footer class="bottom-bar"><span>AN ORIGINAL POCKET-SIZED ADVENTURE</span><span>MADE FOR THE LONG WAY HOME <i>✦</i></span></footer>
+  </main>
+  <div class="mobile-pad" id="mobile-pad" aria-label="Touch movement controls"><button data-dir="up" aria-label="Move up">▲</button><div><button data-dir="left" aria-label="Move left">◀</button><button data-dir="down" aria-label="Move down">▼</button><button data-dir="right" aria-label="Move right">▶</button></div></div>
+  <script src="game.js"></script>
+</body>
+</html>
